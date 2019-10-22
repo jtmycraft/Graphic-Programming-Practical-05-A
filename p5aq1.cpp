@@ -9,10 +9,6 @@
 
 #define WINDOW_TITLE "OpenGL Window"
 
-float r = 1, g = 0, b = 0;
-float points[4][2] = {
-	{ -0.1f, 0.05f },{ 0.1f, 0.05f },{ 0.1f, -0.05f },{ -0.1f, -0.05f }
-};
 
 LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -23,48 +19,9 @@ LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 		break;
 
 	case WM_CHAR:
-		switch (wParam)
-		{
-		case 0x52:
-			r = 1.0f;
-			g = 0;
-			b = 0;
-			break;
-		case 0x47:
-			r = 0;
-			g = 1.0f;
-			b = 0;
-			break;
-		case 0x42:
-			r = 0;
-			g = 0;
-			b = 1.0f;
-			break;
-		}
 		break;
 
 	case WM_KEYDOWN:
-		switch (wParam)
-		{
-		case VK_ESCAPE:
-			PostQuitMessage(0);
-			break;
-		case VK_LEFT:
-			glTranslatef(-0.01f, 0, 0);
-			break;
-		case VK_RIGHT:
-			glTranslatef(0.01f, 0, 0);
-			break;
-		case VK_UP:
-			glTranslatef(0, 0.01f, 0);
-			break;
-		case VK_DOWN:
-			glTranslatef(0, -0.01f, 0);
-			break;
-		case VK_SPACE:
-			glLoadIdentity();
-			break;
-		}
 		break;
 
 	default:
@@ -107,35 +64,116 @@ bool initPixelFormat(HDC hdc)
 }
 //--------------------------------------------------------------------
 
+void myCone()
+{
+	GLUquadricObj* var = NULL;
+	var = gluNewQuadric();
+
+	glPushMatrix();
+	glColor3ub(171, 124, 44);
+	glRotatef(70, 1, 0, 0);
+	//gluQuadricDrawStyle(var, GLU_LINE);
+	gluCylinder(var, 0.25f, 0.005f, 0.9f, 32, 32);
+	glPopMatrix();
+}
+
+void myIceCream()
+{
+	GLUquadricObj* var = NULL;
+	var = gluNewQuadric();
+
+	glPushMatrix();
+	glColor3ub(180, 255, 145);
+	glRotatef(70, 1, 0, 0);
+	//gluQuadricDrawStyle(var, GLU_LINE);
+	gluSphere(var, 0.235f, 32, 32);
+	glPopMatrix();
+
+	glPushMatrix();
+	glColor3ub(227, 227, 227);
+	glTranslatef(0, 0.25f, -0.05f);
+	glRotatef(70, 1, 0, 0);
+	//gluQuadricDrawStyle(var, GLU_LINE);
+	gluSphere(var, 0.22f, 32, 32);
+	glPopMatrix();
+}
+
+void myCherry()
+{
+	GLUquadricObj* var = NULL;
+	var = gluNewQuadric();
+
+	glPushMatrix();
+	glColor3ub(255, 31, 31);
+	glTranslatef(0.15f, 0.4f, -0.15f);
+	glRotatef(70, 1, 0, 0);
+	//gluQuadricDrawStyle(var, GLU_LINE);
+	gluSphere(var, 0.05f, 32, 32);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(0.15f, 0.4f, -0.15f);
+	glRotatef(70, 1, 1, 0);
+	glBegin(GL_LINE_STRIP);
+	glColor3ub(255, 31, 31);
+	glVertex3f(0.1f, 0.15f, 0);
+	glVertex3f(0, 0.15f, 0);
+	glVertex3f(0, 0, 0);
+	glEnd();
+	glPopMatrix();
+}
+
+void myRoll()
+{
+	GLUquadricObj* var = NULL;
+	var = gluNewQuadric();
+
+	glPushMatrix();
+	glColor3ub(87, 48, 0);
+	glTranslatef(0, 0.35f, -0.21f);
+	glRotatef(-70, 1, 0, 1);
+	//gluQuadricDrawStyle(var, GLU_LINE);
+	gluCylinder(var, 0.03f, 0.03f, 0.5f, 32, 32);
+	glPopMatrix();
+}
+
+void myUnknownObject()
+{
+	GLUquadricObj* var = NULL;
+	var = gluNewQuadric();
+
+	glPushMatrix();
+	glColor3ub(255, 247, 135);
+	glTranslatef(-0.15f, 0.45f, -0.13f);
+	glRotatef(90, 0, 0, 1);
+	gluQuadricDrawStyle(var, GLU_LINE);
+	gluCylinder(var, 0.069f, 0.07f, 0.1f, 32, 32);
+	glPopMatrix();
+}
+
 void display()
 {
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClearColor(0.18f, 0.04f, 0.14f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	GLUquadricObj *var = gluNewQuadric();
-	
-	glPushMatrix();
-	
-	glRotatef(80, 1, 0, 0);
-	glColor3ub(143, 79, 0);
-	gluQuadricDrawStyle(var, GLU_LINE);
-	gluCylinder(var, 0.3f, 0.005f, 0.8f, 16, 16);
-	glPopMatrix();
+	glEnable(GL_DEPTH_TEST);
 
-	glPushMatrix();
-	glTranslatef(0, 0.05f, 0);
-	glRotatef(80, 1, 0, 0);
-	glColor3ub(210, 247, 121);
-	gluQuadricDrawStyle(var, GLU_LINE);
-	gluSphere(var, 0.29f, 16, 16);
-	glPopMatrix();
+	myCone();
+	myIceCream();
+	myCherry();
+	myRoll();
+	myUnknownObject();
 
-	glPushMatrix();
-	glTranslatef(0, 0.2f, 0);
-	glRotatef(80, 1, 0, 0);
-	glColor3ub(237, 237, 237);
+	/*
+	GLUquadricObj* var = NULL;
+	var = gluNewQuadric();
+
 	gluQuadricDrawStyle(var, GLU_LINE);
-	gluSphere(var, 0.26f, 16, 16);
-	glPopMatrix();
+	//gluSphere(var, 0.5f, 64, 64);
+	gluCylinder(var, 0.3f, 0.5f, 0.8f, 32, 32);
+
+	gluDeleteQuadric(var); // No effect due to swap buffer
+	*/
 }
 
 //--------------------------------------------------------------------
