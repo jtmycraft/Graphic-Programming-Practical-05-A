@@ -75,6 +75,13 @@ void myCone()
 	//gluQuadricDrawStyle(var, GLU_LINE);
 	gluCylinder(var, 0.25f, 0.005f, 0.9f, 32, 32);
 	glPopMatrix();
+
+	glPushMatrix();
+	glColor3ub(209, 164, 88);
+	glRotatef(70, 1, 0, 0);
+	gluQuadricDrawStyle(var, GLU_LINE);
+	gluCylinder(var, 0.25f, 0.005f, 0.9f, 32, 32);
+	glPopMatrix();
 }
 
 void myIceCream()
