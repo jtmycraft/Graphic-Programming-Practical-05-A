@@ -5,10 +5,12 @@
 #include <conio.h>
 #include <string>
 
-//#pragma comment (lib, "OpenGL32.lib")
+#pragma comment (lib, "OpenGL32.lib")
+#pragma comment (lib, "GLU32.lib")
 
 #define WINDOW_TITLE "OpenGL Window"
 
+float yRotate = 0;
 
 LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -22,6 +24,14 @@ LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 		break;
 
 	case WM_KEYDOWN:
+		switch (wParam) {
+		case VK_LEFT:
+			yRotate += 0.05f;
+			break;
+		case VK_RIGHT:
+			yRotate -= 0.05f;
+			break;
+		}
 		break;
 
 	default:
@@ -165,6 +175,7 @@ void display()
 
 	glEnable(GL_DEPTH_TEST);
 
+	glRotatef(yRotate, 0, 1, 0);
 	myCone();
 	myIceCream();
 	myCherry();
